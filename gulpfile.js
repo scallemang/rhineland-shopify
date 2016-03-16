@@ -16,6 +16,9 @@ var neat 			= require('node-neat').includePaths;
 var browserify		= require('browserify');
 var watchify		= require('watchify');
 var source			= require('vinyl-source-stream');
+// Image optimization
+var imagemin		= require('gulp-imagemin');
+var changed			= require('gulp-changed');
 
 function handleErrors() {
 	var args = Array.prototype.slice.call(arguments);
@@ -39,9 +42,30 @@ gulp.task('sass', function() {
 		.pipe(gulp.dest('./Timber/assets'));
 });
 
+// JS compilation
+gulp.task('browserify', function(){
+	return browserify('./lib/js/app.js')
+		.bundle()
+		.on('error', handleErrors)
+		// Pass desired output filename to vinyl-source-stream
+		.pipe(source('bundle.js'))
+		// Start piping stream to tasks!
+		.pipe(gulp.dest('./Timber/assets/'));
+});
+
+// Image optimization
+gulp.task('images', function() {
+	return gulp.src('./lib/images/**')
+		.pipe(changed('./Timber/assets/'))	// Ignore unchanged files
+		.pipe(imagemin())					// Optimize
+		.pipe(gulp.dest('./Timber/assets/'))
+});
+
+// Watch task
 gulp.task('watch', function() {
 	gulp.watch('./lib/scss/**/*.{sass,scss}', ['sass']);
 	gulp.watch('./lib/js/**/*.js', ['browserify']);
+	gulp.watch('lib/images/*.{jpg,jpeg,png,gif,svg}', ['images']);
 
 	var watcher = watchify(browserify({
 		// Specify the entry point of your app
@@ -55,17 +79,6 @@ gulp.task('watch', function() {
 			.pipe(source('bundle.js'))
 			.pipe(gulp.dest('./Timber/assets/'))
 	})
-});
-
-// JS compilation
-gulp.task('browserify', function(){
-	return browserify('./lib/js/app.js')
-		.bundle()
-		.on('error', handleErrors)
-		// Pass desired output filename to vinyl-source-stream
-		.pipe(source('bundle.js'))
-		// Start piping stream to tasks!
-		.pipe(gulp.dest('./Timber/assets/'));
 });
 
 // Watch files; when changed, upload files to Shopify store
