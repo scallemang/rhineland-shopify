@@ -25,6 +25,10 @@ $large: 1024px;
 $font-display: "jaf-bernino-sans-condensed", "Arial Black", Verdana, "Droid Sans", sans-serif;
 $font-text: "proxima-nova", "Open Sans","Gill Sans MT","Gill Sans",Corbel,Arial,sans-serif;
 
+$color-white: #FFF;
+$color-primary: #EfA72A;
+$color-secondary: #4F5850;
+
 // X. Store styles
 //// x.x. Typography
 body {
@@ -33,6 +37,16 @@ body {
 
 h1 {
 	font-family: $font-display;
+}
+
+@mixin text-default {
+	font-size: em(16);
+	line-height: em(21);
+}
+
+p {
+	@include text-default;
+	color: $color-secondary;
 }
 
 //// X.X Layout (Grid)
@@ -80,11 +94,105 @@ img {
 	max-width: 100%;
 }
 
-// Experiments
-body {
-	//background-image: url( {{'bg-noise.jpg' | asset_url }});
+//// X.X Modules
+.product-single {
+	background-color: $color-secondary;
+	color: $color-white;
+	font-weight: 300;
+	h1 {
+		font-size: em(25);
+		line-height: 1.1em;
+		text-transform: uppercase;
+		@media (min-width: $small) {
+			font-size: em(30);
+			line-height: 1.1em;
+		}
+	}
+	span {
+		@include text-default;
+	}
+	#ProductPrice {
+		color: $color-primary;
+		font-size: em(45);
+		font-family: $font-display;
+		@media (min-width: $small) {
+			font-size: em(50);
+		}
+		sup {
+			font-size: 23px;
+			vertical-align: super;
+			@media (min-width: $small) {
+				font-size: 25px;
+			}
+		}
+	}
+	.product-description {
+		
+	}
 }
 
-img {
+.flex-hover-container {
+	position: relative;
+	&:hover .hover-content-wrapper a {
+		opacity: 1;
+	}
+	@media (max-width: $medium) {
+		&.small--one-half {
+			width: 50%;
+			margin-right: 0;
+		}
+	}
+	@media (min-width: $medium) {
+		&.large--one-quarter {
+			width: 25%;
+			margin-right: 0;
+		}
+	}
+}
 
+.hover-content-wrapper {
+		p {
+			margin-bottom: -3px;
+		}
+		a {
+		background: rgba(239,167,42,0.95);
+		position: absolute;
+		top: 0;
+		left: 0;
+		width: 100%;
+		height: 100%;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		opacity: 0;
+		transition: opacity 250ms;
+		flex-direction: column;
+		text-align: center;
+		color: white;
+		text-decoration: none;
+		font-family: $font-display;
+		text-transform: uppercase;
+		font-size: em(20);
+		line-height: 1.3em;
+		padding: 0 20px;
+		@media (min-width: $medium) {
+			font-size: em(20);
+			padding: 0 10px;
+		}
+		span {
+			font-size: 30px;
+			margin-top: 10px;
+		}
+		sup {
+			font-size: 15px;
+			vertical-align: super;
+		}
+	}
+}
+
+// Experiments
+h3 {
+	font-size: 24px;
+	font-weight: 900;
+	margin: 1em 0 0.25em;
 }
