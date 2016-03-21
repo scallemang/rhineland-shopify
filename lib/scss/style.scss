@@ -29,6 +29,11 @@ $color-white: #FFF;
 $color-primary: #EfA72A;
 $color-secondary: #4F5850;
 
+$visual-grid: true;
+$visual-grid-color: black;
+$visual-grid-opacity: .2;
+$visual-grid-index: front;
+
 // X. Store styles
 //// x.x. Typography
 body {
@@ -56,6 +61,51 @@ p {
 
 .grid-uniform, footer.site-footer, .grid {
 	@include row();
+	
+}
+
+@include direction-context(right-to-left) {
+	@media (min-width: $medium) {
+		.hero-wrapper {
+			margin-top: 50px;
+		}
+		&.product-single {
+			.large--one-half {
+				@include span-columns(6);
+				&:first-child {
+					margin-right: 0;
+				}
+				&:last-of-type {
+					
+				}
+				@media (min-width: $large) {
+					&.hero-section {
+						margin-top: -50px;
+						margin-bottom: -50px;
+						.hero-image {
+							width: 100%;
+							z-index: 9999;
+							position: relative;
+						}
+					}
+				}
+			}
+			
+		}
+	}
+	@media (max-width: $medium) {
+		.hero-wrapper {
+			margin-top: 30px;
+		}
+		.hero-section {
+			margin-top: -30px;
+			.hero-image {
+				width: 100%;
+				z-index: 9999;
+				position: relative;
+			}
+		}
+	}
 }
 
 .grid__item {@include span-columns(12);}
@@ -139,12 +189,14 @@ img {
 	@media (max-width: $medium) {
 		&.small--one-half {
 			width: 50%;
+			//@include omega;
 			margin-right: 0;
 		}
 	}
 	@media (min-width: $medium) {
 		&.large--one-quarter {
 			width: 25%;
+			//@include omega;
 			margin-right: 0;
 		}
 	}
@@ -152,7 +204,7 @@ img {
 
 .hover-content-wrapper {
 		p {
-			margin-bottom: -3px;
+			margin-bottom: -21px;
 		}
 		a {
 		background: rgba(239,167,42,0.95);
