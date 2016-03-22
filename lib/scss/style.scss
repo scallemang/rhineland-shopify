@@ -10,16 +10,11 @@ X. Store styles
 *************** */
 
 
-// 1. CSS Reset
-@import 'reset';
 
-// 2. Framework imports
-@import 'bourbon';
-@import 'neat';
 
 // 3. Settings
-$small: 320px;
-$medium: 768px;
+$small: 321px;
+$medium: 769px;
 $large: 1024px;
 
 $font-display: "jaf-bernino-sans-condensed", "Arial Black", Verdana, "Droid Sans", sans-serif;
@@ -33,6 +28,13 @@ $visual-grid: true;
 $visual-grid-color: black;
 $visual-grid-opacity: .2;
 $visual-grid-index: front;
+
+// 1. CSS Reset
+@import 'reset';
+
+// 2. Framework imports
+@import 'bourbon';
+@import 'neat';
 
 // X. Store styles
 //// x.x. Typography
@@ -55,8 +57,14 @@ p {
 }
 
 //// X.X Layout (Grid)
+h1#site-logo {
+	text-align: center;
+}
+
 .neat-wrapper {
 	@include outer-container;
+	padding-left: 30px;
+	padding-right: 30px;
 }
 
 .grid-uniform, footer.site-footer, .grid {
@@ -64,7 +72,31 @@ p {
 	
 }
 
-@include direction-context(right-to-left) {
+// @include direction-context(right-to-left) {
+	.hero-wrapper {
+		
+		@media (max-width: $medium) {
+			padding-bottom: 60px;
+			@include span-columns(12);
+			//@include shift(1);
+			text-align: center;
+		}
+		.hero-image {
+			width: 320px;
+			z-index: 9999;
+			position: relative;
+			display: block;
+			margin: 0 auto;
+			@media (min-width: $medium) {
+				width: 512px;
+			}
+		}
+		.hero-description {
+			p {
+				color: $color-white;
+			}
+		}
+	}
 	@media (min-width: $medium) {
 		.hero-wrapper {
 			margin-top: 50px;
@@ -78,14 +110,17 @@ p {
 				&:last-of-type {
 					
 				}
+				&.hero-section {
+					margin-top: -50px;
+					margin-bottom: -50px;
+				}
+				
 				@media (min-width: $large) {
 					&.hero-section {
 						margin-top: -50px;
 						margin-bottom: -50px;
 						.hero-image {
-							width: 100%;
-							z-index: 9999;
-							position: relative;
+							display: initial;
 						}
 					}
 				}
@@ -95,31 +130,68 @@ p {
 	}
 	@media (max-width: $medium) {
 		.hero-wrapper {
-			margin-top: 30px;
+			//margin-top: 50px;
 		}
 		.hero-section {
-			margin-top: -30px;
-			.hero-image {
-				width: 100%;
-				z-index: 9999;
-				position: relative;
-			}
+			margin-top: -50px;
+			
+		}
+	}
+//}
+
+.absolute-hero-image-wrapper {
+	position: relative;
+    // margin-top: -68px;
+    // left: 50%;
+    // margin-left: -160px;
+    // max-width: initial;
+    // width: 320px;
+    // clear: both;
+    // z-index: 99;
+    @include outer-container;
+	@media (min-width: $medium) {
+		// width: 512px;
+		// left: 75%;
+		// margin-left: -256px;
+	}
+	.absolute-hero-image {
+		width: 100%;
+		position: absolute;
+	    margin-top: -20px;
+	    left: 50%;
+	    margin-left: -160px;
+	    max-width: initial;
+	    width: 320px;
+	    clear: both;
+	    z-index: 99;
+		@media (min-width: $medium) {
+			width: 512px;
+			left: 75%;
+			margin-left: -256px;
 		}
 	}
 }
 
 .grid__item {@include span-columns(12);}
 
-@media (max-width: $small) {
-	.small--one-half {@include span-columns(6);}
-	.small--one-third {@include span-columns(4);}
-	.small--one-quarter {@include span-columns(3);}
+.small--one-half {
+	@include media(min-width $small max-width $medium, 2) {
+		@include span-columns(1);
+	}
 }
 
-@media (min-width: $small) and (max-width: $medium) {
-	.medium--one-half {@include span-columns(6);}
-	.medium--one-third {@include span-columns(4);}
-	.medium--one-quarter {@include span-columns(3);}
+.small--full  {
+	@include media(min-width $small max-width $medium, 2) {
+		@include span-columns(2);
+	}
+}
+
+.medium--one-half {
+	@include media(min-width $small max-width $medium, 2) {
+		@include span-columns(1);
+		// .medium--one-third {@include span-columns(4);}
+		// .medium--one-quarter {@include span-columns(3);}
+	}
 }
 
 @media (max-width: $medium) {
@@ -145,10 +217,29 @@ img {
 }
 
 //// X.X Modules
+.btn-primary {
+	text-decoration: none;
+	clear: both;
+	font-family: $font-display;
+	padding: 16px 12px;
+	text-transform: uppercase;
+	display: inline-block;
+	background-color: $color-primary;
+	color: $color-white;
+}
+
 .product-single {
-	background-color: $color-secondary;
+	//background-color: $color-secondary;
 	color: $color-white;
 	font-weight: 300;
+	margin-top: 50px;
+	padding-top: 284px;
+	height: 780px;
+	margin-bottom: 66px;
+	@media (min-width: $medium) {
+		padding-top: 0;
+		height: 480px;
+	}
 	h1 {
 		font-size: em(25);
 		line-height: 1.1em;
@@ -170,7 +261,7 @@ img {
 		}
 		sup {
 			font-size: 23px;
-			vertical-align: super;
+			vertical-align: middle;
 			@media (min-width: $small) {
 				font-size: 25px;
 			}
@@ -186,8 +277,15 @@ img {
 	&:hover .hover-content-wrapper a {
 		opacity: 1;
 	}
-	@media (max-width: $medium) {
-		&.small--one-half {
+	@media (max-width: $small) {
+		&.small--full {
+			width: 100%;
+			//@include omega;
+			margin-right: 0;
+		}
+	}
+	@media (min-width: $small) and (max-width: $medium) {
+		&.small--full {
 			width: 50%;
 			//@include omega;
 			margin-right: 0;
