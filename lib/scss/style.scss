@@ -48,6 +48,20 @@ $visual-grid-index: front;
 	line-height: em(21);
 }
 
+@mixin product-single-block {
+	padding-top: 314px;
+	height: 800px;
+	margin-bottom: 66px;
+	@media (min-width: 768px) {
+		padding-top: 532px;
+		height: 1008px;
+	}
+	@media (min-width: $medium) {
+		padding-top: 0;
+		height: 480px;
+	}
+}
+
 // 1. CSS Reset
 @import 'reset';
 
@@ -70,7 +84,8 @@ body {
 		font-family: $font-display;
 		&#site-logo {
 			text-align: center;
-			margin-top: 40px;
+			margin-top: 0;
+			padding-top: 40px;
 		}
 	}
 	h3 {
@@ -125,6 +140,29 @@ body {
 		@include row();
 	}
 //// X.X Components (Header, Hero)
+////// X.X.X Shopping Cart popup
+	#shopping-cart {
+		position: absolute;
+		top: 0;
+		right: -300px;
+		background: $color-white;
+		width: 300px;
+		z-index: 999;
+		padding-top: 30px;
+		transition: right 250ms;
+		display: block;
+		&.active {
+			right: 0;
+		}
+		.cart-content {
+			margin-top: 60px;
+		}
+		.icon-x {
+			position: absolute;
+			right: 30px;
+			cursor: pointer;
+		}
+	}
 ////// X.X.X Header
 	.site-nav>li, .site-nav--mobile>li {
 		display: inline-block;
@@ -134,7 +172,7 @@ body {
 			@media (min-width: $large) {
 				position: absolute;
 				right: 0;
-				top: -40px;
+				//top: -40px;
 			}
 		}
 		height: 66px;
@@ -209,6 +247,7 @@ body {
 			height: 66px;
 			width: 34%;
 			float: left;
+			cursor: pointer;
 			@include flex-center;
 			@media (min-width: $small) {
 				width: 102px;
@@ -380,19 +419,10 @@ body {
 		//background-color: $color-secondary;
 		color: $color-white;
 		font-weight: 300;
+		position: relative;
 		margin-top: 50px;
-		padding-top: 314px;
-		height: 800px;
-		margin-bottom: 66px;
-		@media (min-width: 768px) {
-			padding-top: 532px;
-			height: 1008px;
-			margin-bottom: 100px;
-		}
-		@media (min-width: $medium) {
-			padding-top: 0;
-			height: 480px;
-		}
+		margin-bottom: 100px;
+		@include product-single-block;
 		h1 {
 			font-size: em(25);
 			line-height: 1.1em;
@@ -436,6 +466,73 @@ body {
 				max-width: 480px;
 				margin: 0 auto;
 			}
+		}
+	}
+	.product-info-popup {
+		position: absolute;
+		top: 0;
+		display: none;
+		width: 100%;
+		z-index: 999;
+		background: rgba(79,88,80,0.95);
+		//display: flex;
+		align-items: center;
+		justify-content: center;
+		@include product-single-block;
+		.wrapper {
+			@include outer-container;
+			margin-top: 86px;
+			//@include span-columns(12);
+			.popup-full {
+				@include span-columns(10);
+				@include shift(1);
+				@media (min-width: $large) {
+					@include span-columns(6);
+					@include shift(3);
+				}
+				//width: 100%;
+				p {
+					&.voltage {
+						position: relative;
+						padding-left: 40px;
+					}
+				}
+			}
+		}
+		.icon-x {
+			top: 30px;
+			right: 30px;
+			position: absolute;
+			cursor: pointer;
+
+		}
+		ul {
+			padding-left: 0;
+			list-style-type: none;
+			li {
+				font-size: 1em;
+				line-height: 2em;
+				font-weight: 600;
+				span {
+					width: 544px;
+					@media (min-width: $large) {
+						width: 464px;
+					}
+					display: inline-block;
+					font-weight: 300;
+				}
+			}
+		}
+		h3 {
+			font-family: $font-display;
+			font-size: 20px;
+			line-height: 22px;
+		}
+		p {
+			color: #FFF;
+		}
+		@media (max-width: 769px) {
+			display: none !important;
 		}
 	}
 	.flex-hover-container {
